@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   namespace: argocd
-  name: nginx
+  name: apache
 spec:
   generators:
   - list:
@@ -12,16 +12,16 @@ spec:
         branch: feat/test 
   template:
     metadata:
-      name: '{{cluster}}-nginx'
+      name: '{{cluster}}-apache'
     spec:
       project: default
       source:
         repoURL: https://github.com/pauldeniyi1/argocd-test-me-ga.git
         targetRevision: '{{branch}}'
-        path: 'applications/nginx/{{cluster}}'
+        path: 'applications/apache/{{cluster}}'
       destination:
         server: '{{url}}'
-        namespace: nginx
+        namespace: apache
       syncPolicy:
         automated:
           prune: true
