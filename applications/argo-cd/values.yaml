@@ -2581,7 +2581,7 @@ repoServer:
   name: repo-server
 
   # -- The number of repo server pods to run
-  replicas: 1
+  replicas: 3
 
   # -- Runtime class name for the repo server
   # @default -- `""` (defaults to global.runtimeClassName)
