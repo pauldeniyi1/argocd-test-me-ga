@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  namespace: argocd
+  name: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: dev
+        url: https://kubernetes.default.svc
+        branch: main 
+  template:
+    metadata:
+      name: '{{cluster}}-argocd'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/pauldeniyi1/argocd-test-me-ga.git
+        targetRevision: '{{branch}}'
+        path: 'applications/argo-cd'
+      destination:
+        server: '{{url}}'
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - Validate=true
+        - ServerSideApply=true
+        - CreateNamespace=true
+   
